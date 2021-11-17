@@ -1,16 +1,17 @@
 <template>
     <v-container>
         <v-carousel cycle>
-            <v-carousel-item
+            <v-carousel-item            
             v-for="(item, index) in items"
             :key="index"
             :src="item.src"
             :label="item.label"
             @click="goToProduct(item.label)">
-            <v-card flat>
+            <v-card flat
+            :color="item.color">
                 <v-card-text>
-                <h3 class="headline">{{ item.title }}</h3>
-                <p>{{ item.text }}</p>
+                <h3 class="text-h4 headline font-weight-bold">{{ item.title }}</h3>
+                <p class="text-h6 text-right font-weight-bold">{{ item.text }}</p>
                 </v-card-text>
             </v-card>
             </v-carousel-item>
@@ -29,18 +30,21 @@ export default {
                 label: 'picadas',
                 title: 'Picadas',
                 text: 'Los mejores fiambres y quesos...',
+                color: 'brown',
                 },
                 {
                 src: '/carousel2.jpg',
                 label: 'sandwiches',
                 title: 'Sandwiches de miga',
                 text: 'Variedad de rellenos para elegir...',
+                color: 'green',
                 },
                 {
                 src: '/carousel3.jpg',
                 label: 'bodega',
                 title: 'Bodega',
-                text: 'Vinos, cervezas importadas, encurtidos, y mucho más...',
+                text: 'Vinos, cervezas importadas, encurtidos y mucho más...',
+                color: 'purple',
                 },
             ],
         }

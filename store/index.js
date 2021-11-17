@@ -4,6 +4,7 @@ export const state = () => ({
             name: 'bodega',
             imgs: ['/carousel3.jpg', '/vino1.jpg'],
             color: 'purple',
+            secondaryColor: '#5c007a',
             description: 'La mejor selección de vinos, cervezas y delicateses',
             variations: [
                 {
@@ -25,20 +26,21 @@ export const state = () => ({
             name: 'sandwiches',
             imgs: ['/carousel2.jpg', '/sandw3.jpg'],
             color: 'green',
+            secondaryColor: '#003300',
             variations: [
                 {
                     id: 1,
-                    name: '12 triples (a elección)',
+                    name: '12 triples',
                     price: 1200,
                 },
                 {
                     id: 2,
-                    name: '24 triples (a elección)',
+                    name: '24 triples',
                     price: 2200,
                 },
                 {
                     id: 3,
-                    name: '50 triples (a elección)',
+                    name: '50 triples',
                     price: 4200,
                 },
             ],
@@ -49,23 +51,27 @@ export const state = () => ({
             name: 'picadas',
             imgs: ['carousel1.jpg', '/picada.jpg'],
             color: 'brown',
+            secondaryColor: '#260e04',
             variations: [
                 {
                     id: 1,
-                    name: 'Mediana (2 personas)',
+                    name: 'Mediana',
                     img: '/picada peq.jpg',
+                    description: 'Ideal para compartir en pareja.',
                     price: 1500,
                 },
                 {
                     id: 2,
-                    name: 'Grande (4 personas)',
+                    name: 'Grande',
                     img: '/picada.jpg',
+                    description: 'Ideal para 4 personas.',
                     price: 2800,
                 },
                 {
                     id: 3,
-                    name: 'Familiar (8 personas)',
+                    name: 'Familiar',
                     img: '/picada grande.jpg',
+                    description: '¡Para toda la familia! (8 personas)',
                     price: 5200,
                 },
             ],
