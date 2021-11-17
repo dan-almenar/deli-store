@@ -1,4 +1,5 @@
 # deli
+Web App for (fake) local deli store. This project serves me as an entrance for both Nuxt.js and Vuetify.
 
 ## Build Setup
 
