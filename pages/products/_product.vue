@@ -9,29 +9,20 @@
         <div class="card-wrapper" v-for="variation in product.variations" :key="variation.id">
             <VariationsCards :variation="variation" :color="product.secondaryColor" />
         </div>
-        
-        <!-- INCLUDE V-FOR VARIANTS (CAROUSEL OF CARDS) -->
-        <!-- THIS V-IF SELECTED VARIANT 
-        <div class="wrapper" v-for="content in product.contents" :key="content">
-            <v-checkbox
-                :label="`${content}`"
-                @click="addItem(content)">
-            </v-checkbox>
-        </div>
-        <v-card-text>Selección: {{ selectedItems }}</v-card-text>
-        -->
     </v-card>
     <v-card-actions>
-        <v-btn block
+        <v-btn
+        @click="toggleItemSelection"
+        :block="$vuetify.breakpoint.mdAndDown"
         outlined
-        :color="this.product.color">Añadir</v-btn>
+        :color="this.product.color">Continuar</v-btn>
     </v-card-actions>
 </v-container>
 </template>
 
 <script>
 import VariationsCards from '~/components/VariationsCards.vue'
-import { mapState } from 'vuex'
+import { mapGetters } from 'vuex'
 export default {
     data() {
         return {
@@ -42,8 +33,9 @@ export default {
         product(){
             return this.products.filter(product => product.name === this.$route.params.product)[0]
         },
-        ...mapState({
-            products: state => state.products
+        ...mapGetters({
+            products: 'products',
+            cart: 'cart',
         }),
         selectedItems(){
             return this.selected.join(', ')
@@ -60,6 +52,9 @@ export default {
             } else {
                 this.selectedItems.push(label)
             }
+        },
+        toggleItemSelection(){
+            console.log('toggle item selection')
         },
     },
     components: {

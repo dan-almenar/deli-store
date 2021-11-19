@@ -79,4 +79,81 @@ export const state = () => ({
             contents: ['jamón crudo', 'jamón cocido', 'queso gouda', 'salame', 'mortadela', 'bondiola', 'aceitunas', 'pepinillos'],
         }
     ],
-})
+    cart: [],
+    sandwiches: [
+        'Jamón y Queso',
+        'Crudo y Queso',
+        'Aceituna y Queso',
+        'Queso y Huevo',
+        'Vegetariano',
+        'Tomate y Queso',
+        'Queso y Atún'    
+    ],
+    wines: [
+        'Tinto X',
+        'Tinto Y',
+        'Tinto Z',
+        'Blanco X',
+        'Blanco Y',
+        'Espumoso',
+        'Rosado',
+    ],
+    beers: [
+        'Corona',
+        'Quilmes',
+        'Patagonia',
+        'Brahma',
+        'Budweiser',
+    ],
+    coldCuts: [
+        'Jamón cocido',
+        'Jamón crudo',
+        'Salame',
+        'Bondiola',
+        'Salamín',
+        'Leberwurst',
+        'Queso gouda',
+        'Queso Regianito',
+        'Queso Roquefort',
+    ],
+    nonAlcoholicDrinks: [
+        {
+            name: 'Coca Cola',
+            price: 260,
+        },
+        {
+            name: 'Soda',
+            price: 150,
+        },
+        {
+            name: 'Fanta',
+            price: 260,
+        },
+        {
+            name: 'Sprite',
+            price: 260,
+        },
+    ],
+});
+
+export const getters = {
+    products: state => state.products,
+    cart: state => state.cart,
+    sandwiches: state => state.sandwiches,
+    wines: state => state.wines,
+    beers: state => state.beers,
+    coldCuts: state => state.coldCuts,
+    nonAlcoholicDrinks: state => state.nonAlcoholicDrinks,
+};
+
+export const mutations = {
+    addToCart(state, product) {
+        state.cart.push(product);
+    },
+}
+
+/*
+TODO:
+Change Cart to Object (itemsCount: number; itemsList: array).
+Change mutations accordingly
+*/

@@ -51,7 +51,6 @@ export default {
     },
     methods: {
         goToProduct(label){
-            console.log(label);
             this.$router.push(`/products/${label}`)
         },
     }
