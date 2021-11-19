@@ -79,7 +79,11 @@ export const state = () => ({
             contents: ['jamón crudo', 'jamón cocido', 'queso gouda', 'salame', 'mortadela', 'bondiola', 'aceitunas', 'pepinillos'],
         }
     ],
-    cart: [],
+    cart: {
+        items: [],
+        total: 0,
+        totalItems: 0,
+    },
     sandwiches: [
         'Jamón y Queso',
         'Crudo y Queso',
@@ -148,12 +152,13 @@ export const getters = {
 
 export const mutations = {
     addToCart(state, product) {
-        state.cart.push(product);
+        state.cart.items.push(product.name);
+        state.cart.total = state.cart.total + product.price;
+        state.cart.totalItems = state.cart.totalItems + 1;
     },
+    removeFromCart(state, product) {
+        state.cart.items.splice(state.cart.items.indexOf(product.name), 1);
+        state.cart.total = state.cart.total - product.price;
+        state.cart.totalItems = state.cart.totalItems - 1;
+    }
 }
-
-/*
-TODO:
-Change Cart to Object (itemsCount: number; itemsList: array).
-Change mutations accordingly
-*/

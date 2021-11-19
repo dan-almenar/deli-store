@@ -5,8 +5,8 @@
     change switchSelection to only switch if counter === 0 -->
      <v-card
      elevation="14"
-     @click="[switchSelection, addToCart(variation.name)]"
-     :color="this.selected ? this.color : ''">
+     @click="handleSelection(variation)"
+     :color="selected ? color : ''">
         <v-card-title class="text-h5">{{ variation.name }}</v-card-title>
         <v-card-subtitle class="text-subtitle-2">{{ variation.description }}</v-card-subtitle>
         <v-card-text class="text-right">AR$: {{ variation.price }}</v-card-text>
@@ -22,6 +22,7 @@ export default {
     data(){
         return {
             selected: false,
+            count: 0,
         }
     },
     props: {
@@ -35,12 +36,22 @@ export default {
         }
     },
     methods: {
-        switchSelection(){
-            this.selected = !this.selected
+        handleSelection(variation){
+            this.count = this.count +1
+            this.count > 0 ? this.selected = true : this.selected = false;
+            this.addToCart(variation)
         },
         ...mapMutations({
             addToCart: 'addToCart'
         }),
+    },
+    computed: {
+        isSelected(){
+            return this.selected
+        },
+        isPositive(){
+            return this.count > 0
+        }
     },
 }
 </script>
