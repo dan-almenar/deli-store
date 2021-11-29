@@ -5,7 +5,7 @@
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       <v-toolbar-title>Flores Deli</v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn href="">btn</v-btn>
+      <v-btn large rounded href=""><v-icon left>mdi-cart</v-icon>{{ cart.totalItems }}</v-btn>
     </v-app-bar>
       <v-container>
         <Nuxt />
@@ -24,12 +24,18 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 export default {
   data () {
     return {
       fixed: false,
     }
   },
+  computed: {
+    ...mapGetters({
+      cart: "cart",
+    }),
+  }
 }
 </script>
 

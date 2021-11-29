@@ -7,31 +7,54 @@
         width="100%"
         max-height="500px"></v-img>
         <div class="card-wrapper" v-for="variation in product.variations" :key="variation.id">
-            <VariationsCards :variation="variation" :color="product.secondaryColor" />
+            <VariationsCards :variation="variation" :colors="colors" />
         </div>
     </v-card>
+    <div v-if="!this.continue">
     <v-card-actions>
         <v-btn
-        @click="toggleItemSelection"
+        @click="showOtherProduct"
         :block="$vuetify.breakpoint.mdAndDown"
         outlined
         :color="this.product.color">Continuar</v-btn>
     </v-card-actions>
+    </div>
+    <div class="other-products" v-else>
+        <v-card-title>Añadir otro:</v-card-title>
+        <v-btn outlined :color="this.product.color" >Continuar<v-icon right>mdi-cart-arrow-right</v-icon></v-btn>
+        
+        <ProductCard :product="otherProducts[0]" />
+        <ProductCard :product="otherProducts[1]" />
+        <!--
+        <v-card-actions>
+        <v-btn
+        @click="this.toggleContinue"
+        :block="$vuetify.breakpoint.mdAndDown"
+        outlined
+        :color="this.product.color">Back</v-btn>
+        </v-card-actions>
+        -->
+    </div>
 </v-container>
 </template>
 
 <script>
+import ProductCard from '@/components/ProductCard.vue'
 import VariationsCards from '~/components/VariationsCards.vue'
 import { mapGetters } from 'vuex'
 export default {
     data() {
         return {
             selected: [],
+            continue: false,
         }
     },
     computed: {
         product(){
             return this.products.filter(product => product.name === this.$route.params.product)[0]
+        },
+        otherProducts(){
+            return this.products.filter(product => product.name != this.product.name)
         },
         ...mapGetters({
             products: 'products',
@@ -44,6 +67,12 @@ export default {
             const firstLetter = this.product.name[0].toUpperCase()
             return this.product.name.replace(this.product.name[0], firstLetter)
         },
+        colors() {
+            return {
+                primary: this.product.color,
+                secondary: this.product.secondaryColor,
+            }
+        },
     },
     methods: {
         addItem(label){
@@ -53,12 +82,16 @@ export default {
                 this.selectedItems.push(label)
             }
         },
-        toggleItemSelection(){
-            console.log('toggle item selection')
+        toggleContinue(){
+            this.continue = !this.continue
+        },
+        showOtherProduct(){
+            this.continue = true
         },
     },
     components: {
         VariationsCards,
+        ProductCard,
     },
 }
 </script>
@@ -80,5 +113,11 @@ h1 {
     display: inline-grid;
     grid-template-columns: repeat(auto-fit, minmax(120px, 2fr));
     gap: 40px;
+}
+
+.other-products {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    align-items: center;
 }
 </style>
