@@ -1,8 +1,6 @@
 <template>
 <v-container>
     <v-spacer></v-spacer>
-    <!-- TODO: Add counter method (onClick) 
-    change switchSelection to only switch if counter === 0 -->
      <v-card
      elevation="14"
      @click="switchSelected"
@@ -18,7 +16,6 @@
         <v-card-text class="text-right">AR$: {{ variation.price }}</v-card-text>
     </v-card>
     <v-spacer></v-spacer>
-        <!-- TODO: align this to the right -->
         <div class="btn-block">
             <v-btn-toggle
             v-if="selected"
@@ -31,13 +28,13 @@
                 rounded
                 @click="handleRemove(variation)">
                     <v-icon
-                    :color="colors.secondary">mdi-cart-minus</v-icon>
+                    :color="colors.secondary">mdi-minus</v-icon>
                     </v-btn>
                 <v-btn
                 plain
                 rounded
-                @click="handleAdd(variation)">
-                    <v-icon>mdi-cart-plus</v-icon>
+                @click="handleAdd()">
+                    <v-icon>mdi-plus-thick</v-icon>
                 </v-btn>
             </v-btn-toggle>
         </div>
@@ -46,7 +43,6 @@
 
 <script>
 import { mapMutations } from 'vuex'
-import AddRemoveItem from './AddRemoveItem.vue'
 export default {
     name: 'VariationsCards',
     data(){
@@ -56,6 +52,10 @@ export default {
         }
     },
     props: {
+        productName: {
+            type: String,
+            required: true,
+        },
         variation: {
             type: Object,
             required: true
@@ -69,15 +69,16 @@ export default {
         switchSelected(){
             this.selected = !this.selected
         },
-        handleAdd(variation){
-            this.count = this.count +1
+        handleAdd(){
+            // FIX BUG AT CART ITEMS COUNT
+            this.count++
             this.count > 0 ? this.selected = true : this.selected = false;
-            this.addToCart(variation)
+            this.addToCart({productName: this.productName, variation: this.variation, quantity: this.count}) // , quantity: this.count
         },
-        handleRemove(variation){
+        handleRemove(){
             this.count > 0 ? this.count-- : this.count = 0;
             this.count > 0 ? this.selected = true : this.selected = false;
-            this.removeFromCart(variation)
+            this.removeFromCart({productName: this.productName, variation: this.variation, quantity: this.count})
         },
         ...mapMutations({
             addToCart: 'addToCart',
@@ -93,7 +94,7 @@ export default {
         },
         displayCount(){
             return this.count
-        }
+        },
     },
     components: {
     },

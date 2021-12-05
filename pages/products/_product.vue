@@ -7,7 +7,7 @@
         width="100%"
         max-height="500px"></v-img>
         <div class="card-wrapper" v-for="variation in product.variations" :key="variation.id">
-            <VariationsCards :variation="variation" :colors="colors" />
+            <VariationsCards :productName="product.name" :variation="variation" :colors="colors" />
         </div>
     </v-card>
     <div v-if="!this.continue">
@@ -21,7 +21,7 @@
     </div>
     <div class="other-products" v-else>
         <v-card-title>Añadir otro:</v-card-title>
-        <v-btn outlined :color="this.product.color" >Continuar<v-icon right>mdi-cart-arrow-right</v-icon></v-btn>
+        <v-btn outlined :color="this.product.color" @click="goToCart" >Continuar<v-icon right>mdi-cart-arrow-right</v-icon></v-btn>
         
         <ProductCard :product="otherProducts[0]" />
         <ProductCard :product="otherProducts[1]" />
@@ -87,6 +87,9 @@ export default {
         },
         showOtherProduct(){
             this.continue = true
+        },
+        goToCart(){
+            this.$router.push('/cart/cart')
         },
     },
     components: {

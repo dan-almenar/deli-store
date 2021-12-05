@@ -5,7 +5,7 @@
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       <v-toolbar-title>Flores Deli</v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn large rounded href=""><v-icon left>mdi-cart</v-icon>{{ cart.totalItems }}</v-btn>
+      <v-btn large rounded href=""><v-icon left>mdi-cart</v-icon>{{ cart.cartTotalItems }}</v-btn>
     </v-app-bar>
       <v-container>
         <Nuxt />

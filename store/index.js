@@ -80,10 +80,86 @@ export const state = () => ({
         }
     ],
     cart: {
-        items: [],
-        total: 0,
-        totalItems: 0,
+        items: {
+            bodega: {
+                variations: {},
+                productSubtotal: 0,
+                productQuantity: 0,
+            },
+            sandwiches: {
+                variations: {},
+                productSubtotal: 0,
+                productQuantity: 0,
+            },
+            picadas: {
+                variations: {},
+                productSubtotal: 0,
+                productQuantity: 0,
+            },
+        }, // change to Object, make neccesary changes in components
+        cartTotalItems: 0,        
+        cartTotalAmount: 0,
     },
+    colorPalette: {
+        bodega: "purple",
+        sandwiches: "green",
+        picadas: "brown",
+    },
+    
+});
+
+export const getters = {
+    products: state => state.products,
+    cart: state => state.cart,
+};
+
+export const mutations = {
+    addToCart(state, payload) {
+        const product = payload.productName
+        const variation = payload.variation
+        const quantity = payload.quantity
+
+        const productQuantity = state.cart.items[product].productQuantity
+        const productSubtotal = state.cart.items[product].productSubtotal
+
+        const cartTotalItems = state.cart.cartTotalItems
+        const cartTotalAmount = state.cart.cartTotalAmount
+        
+        state.cart.items[product].variations[variation.name] = {
+            variationQuantity: quantity,
+            unitPrice: variation.price,
+            variationSubtotal: variation.price * quantity,
+        }
+        state.cart.items[product].productQuantity = productQuantity + 1
+        state.cart.items[product].productSubtotal = productSubtotal + (variation.price)
+
+        state.cart.cartTotalAmount = cartTotalAmount + (variation.price)
+        state.cart.cartTotalItems = cartTotalItems + 1
+    },
+    
+    removeFromCart(state, payload) {
+        const product = payload.productName
+        const variation = payload.variation
+        const quantity = payload.quantity
+
+        const productVariation = state.cart.items[product].variations[variation.name]
+        const productQuantity = state.cart.items[product].productQuantity
+        const productSubtotal = state.cart.items[product].productSubtotal
+
+        const cartTotalItems = state.cart.cartTotalItems
+        const cartTotalAmount = state.cart.cartTotalAmount
+
+        productVariation.variationQuantity = quantity
+        productVariation.variationSubtotal = variation.price * quantity
+
+        state.cart.items[product].productQuantity = productQuantity - 1
+        state.cart.items[product].productSubtotal = productSubtotal - (variation.price)
+
+        state.cart.cartTotalAmount = cartTotalAmount - (variation.price)
+        state.cart.cartTotalItems = cartTotalItems - 1
+    }
+
+/*
     sandwiches: [
         'Jamón y Queso',
         'Crudo y Queso',
@@ -138,27 +214,6 @@ export const state = () => ({
             price: 260,
         },
     ],
-});
-
-export const getters = {
-    products: state => state.products,
-    cart: state => state.cart,
-    sandwiches: state => state.sandwiches,
-    wines: state => state.wines,
-    beers: state => state.beers,
-    coldCuts: state => state.coldCuts,
-    nonAlcoholicDrinks: state => state.nonAlcoholicDrinks,
-};
-
-export const mutations = {
-    addToCart(state, product) {
-        state.cart.items.push(product.name);
-        state.cart.total = state.cart.total + product.price;
-        state.cart.totalItems = state.cart.totalItems + 1;
-    },
-    removeFromCart(state, product) {
-        state.cart.items.splice(state.cart.items.indexOf(product.name), 1);
-        state.cart.total = state.cart.total - product.price;
-        state.cart.totalItems = state.cart.totalItems - 1;
-    }
+    */    
+    
 }
