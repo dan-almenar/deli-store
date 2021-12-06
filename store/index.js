@@ -96,14 +96,23 @@ export const state = () => ({
                 productSubtotal: 0,
                 productQuantity: 0,
             },
-        }, // change to Object, make neccesary changes in components
+        },
         cartTotalItems: 0,        
         cartTotalAmount: 0,
     },
     colorPalette: {
-        bodega: "purple",
-        sandwiches: "green",
-        picadas: "brown",
+        bodega: {
+            primary: "purple",
+            secondary: '#5c007a',
+        },
+        sandwiches: {
+            primary: "green",
+            secondary: '#003300',
+        },
+        picadas: {
+            primary: "brown",
+            secondary: '#260e04',
+        },
     },
     
 });

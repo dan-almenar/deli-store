@@ -7,7 +7,7 @@
         width="100%"
         max-height="500px"></v-img>
         <div class="card-wrapper" v-for="variation in product.variations" :key="variation.id">
-            <VariationsCards :productName="product.name" :variation="variation" :colors="colors" />
+            <VariationsCards :productName="product.name" :variation="variation" />
         </div>
     </v-card>
     <div v-if="!this.continue">
@@ -39,8 +39,8 @@
 </template>
 
 <script>
-import ProductCard from '@/components/ProductCard.vue'
-import VariationsCards from '~/components/VariationsCards.vue'
+import ProductCard from '@/components/products/ProductCard.vue'
+import VariationsCards from '@/components/products/VariationsCards.vue'
 import { mapGetters } from 'vuex'
 export default {
     data() {

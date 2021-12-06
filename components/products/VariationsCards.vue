@@ -4,7 +4,7 @@
      <v-card
      elevation="14"
      @click="switchSelected"
-     :color="selected ? colors.secondary : ''">
+     :color="selected ? secondaryColor : ''">
         <v-card-title class="text-h5">{{ variation.name }}
             <v-spacer></v-spacer>
             <v-icon
@@ -21,14 +21,14 @@
             v-if="selected"
             borderless
             dense
-            :background-color="colors.primary">
+            :background-color="primaryColor">
                 <v-btn
                 v-if="displayCount != 0"
                 plain
                 rounded
                 @click="handleRemove(variation)">
                     <v-icon
-                    :color="colors.secondary">mdi-minus</v-icon>
+                    :color="secondaryColor">mdi-minus</v-icon>
                     </v-btn>
                 <v-btn
                 plain
@@ -42,7 +42,7 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex'
+import { mapMutations, mapState } from 'vuex'
 export default {
     name: 'VariationsCards',
     data(){
@@ -60,17 +60,12 @@ export default {
             type: Object,
             required: true
         },
-        colors: {
-            type: Object,
-            required: true,
-        }
     },
     methods: {
         switchSelected(){
             this.selected = !this.selected
         },
         handleAdd(){
-            // FIX BUG AT CART ITEMS COUNT
             this.count++
             this.count > 0 ? this.selected = true : this.selected = false;
             this.addToCart({productName: this.productName, variation: this.variation, quantity: this.count}) // , quantity: this.count
@@ -94,6 +89,15 @@ export default {
         },
         displayCount(){
             return this.count
+        },
+        ...mapState({
+            color: 'colorPalette',
+        }),
+        primaryColor(){
+            return this.color[this.productName].primary
+        },
+        secondaryColor(){
+            return this.color[this.productName].secondary
         },
     },
     components: {

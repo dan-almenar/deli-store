@@ -1,17 +1,21 @@
 <template>
 <v-container>
     <h2 class="text-h5
-    font-weight-bold">Hay {{ cart.cartTotalItems}} productos en su carrito:</h2>
+    font-weight-bold">Hay {{ cart.cartTotalItems }} productos en su carrito:</h2>
     <div class="wrapper"
-    v-for="item in filteredCart" :key="item[0]">
-    <CartProduct :product="item" />
+    v-for="item in filteredCart" :key="item[0]">      
 
+     <!-- Add total amount paragraph and pay button -->
+    
+    <CartProduct :product="item[0]" :variations="item[1]" />
+    
     </div>
+    <p>Total: AR$ {{ cart.cartTotalAmount }}</p>
 </v-container>  
 </template>
 
 <script>
-import CartProduct from '@/components/CartProduct.vue'
+import CartProduct from '@/components/cart/CartProduct.vue'
 import { mapGetters } from 'vuex'
 export default {
     name: 'Cart',
