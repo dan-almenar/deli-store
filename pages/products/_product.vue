@@ -22,18 +22,8 @@
     <div class="other-products" v-else>
         <v-card-title>Añadir otro:</v-card-title>
         <v-btn outlined :color="this.product.color" @click="goToCart" >Continuar<v-icon right>mdi-cart-arrow-right</v-icon></v-btn>
-        
         <ProductCard :product="otherProducts[0]" />
         <ProductCard :product="otherProducts[1]" />
-        <!--
-        <v-card-actions>
-        <v-btn
-        @click="this.toggleContinue"
-        :block="$vuetify.breakpoint.mdAndDown"
-        outlined
-        :color="this.product.color">Back</v-btn>
-        </v-card-actions>
-        -->
     </div>
 </v-container>
 </template>

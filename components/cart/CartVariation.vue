@@ -1,20 +1,136 @@
 <template>
-  
+  <v-container>
+    <v-spacer></v-spacer>
+
+    <!-- NEEDS TO BE FIXED -->
+    <v-card
+      elevation="14"
+      @click="switchSelected"
+      :color="selected ? secondaryColor : ''"
+    >
+      <v-card-title class="text-h5"
+        >{{ variationName }}
+        <v-spacer></v-spacer>
+        <!-- add hidden class for count = 0 -->
+        <v-icon :class="count > 0 ? 'text-h6' : 'text-subtitle-2'">
+          Cantidad: {{ variationQuantity }}
+        </v-icon>
+      </v-card-title>
+      <v-card-subtitle class="text-subtitle-2 text-right"
+        >Precio unitario: AR$: {{ variationUnitPrice }}</v-card-subtitle
+      >
+      <v-card-text class="text-right">Subtotal: AR$: {{ variationSubtotal }}</v-card-text>
+    </v-card>
+    <v-spacer></v-spacer>
+<!--
+    <div class="btn-block">
+      <v-btn-toggle
+        v-if="selected"
+        borderless
+        dense
+        :background-color="primaryColor"
+      >
+        <v-btn
+          v-if="displayCount != 0"
+          plain
+          rounded
+          @click="handleRemove(variation)"
+        >
+          <v-icon :color="secondaryColor">mdi-minus</v-icon>
+        </v-btn>
+        <v-btn plain rounded @click="handleAdd()">
+          <v-icon>mdi-plus-thick</v-icon>
+        </v-btn>
+      </v-btn-toggle>
+    </div>
+-->
+  </v-container>
 </template>
 
 <script>
+import { mapMutations, mapState } from 'vuex'
 export default {
-    name: 'CartVariation',
-    props: {
-        variation: {
-            type: Object,
-            required: true,
-        }
+  name: 'CartVariation',
+  data() {
+    return {
+      selected: false,
+      count: 0,
     }
-
+  },
+  props: {
+    productName: {
+      type: String,
+      required: true,
+    },
+    variation: {
+      type: Object,
+      required: true,
+    },
+  },
+  methods: {
+    switchSelected() {
+      this.selected = !this.selected
+    },
+    // THIS NEEDS TO BE HANDLED WITH ACTIONS NOT MUTATIONS
+    // OR JUST USE VUEX TO GET THE CART
+    handleAdd() {
+      this.count == this.variationQuantity
+      this.count++
+      this.count > 0 ? (this.selected = true) : (this.selected = false)
+      this.addToCart({
+        productName: this.productName,
+        variation: {name: this.variation.name, price: this.variation.unitPrice},
+        quantity: this.count,
+      }) // , quantity: this.count
+    },
+    handleRemove() {
+      this.count > 0 ? this.count-- : (this.count = 0)
+      this.count > 0 ? (this.selected = true) : (this.selected = false)
+      this.removeFromCart({
+        productName: this.productName,
+        variation: this.variation,
+        quantity: this.count,
+      })
+    },
+    ...mapMutations({
+      addToCart: 'addToCart',
+      removeFromCart: 'removeFromCart',
+    }),
+  },
+  computed: {
+    displayCount() {
+      return this.count
+    },
+    ...mapState({
+      color: 'colorPalette',
+    }),
+    primaryColor() {
+      return this.color[this.productName].primary
+    },
+    secondaryColor() {
+      return this.color[this.productName].secondary
+    },
+    // all of these will be removed...
+    variationName() {
+      return this.variation.name
+    },
+    variationQuantity() {
+      return this.variation.description.variationQuantity
+    },
+    variationUnitPrice() {
+      return this.variation.description.unitPrice
+    },
+    variationSubtotal() {
+      return this.variation.description.variationSubtotal
+    },
+  },
+  components: {},
 }
 </script>
 
-<style>
-
+<style scoped>
+.btn-block {
+  display: flex;
+  justify-content: flex-end;
+}
 </style>

@@ -81,12 +81,6 @@ export default {
         }),
     },
     computed: {
-        isSelected(){
-            return this.selected
-        },
-        isPositive(){
-            return this.count > 0
-        },
         displayCount(){
             return this.count
         },
@@ -99,8 +93,6 @@ export default {
         secondaryColor(){
             return this.color[this.productName].secondary
         },
-    },
-    components: {
     },
 }
 </script>

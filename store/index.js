@@ -120,6 +120,9 @@ export const state = () => ({
 export const getters = {
     products: state => state.products,
     cart: state => state.cart,
+    filteredCart: state => Object.entries(state.cart.items).filter(item => item[1].productQuantity > 0),
+    emptyCart: state => Object.entries(state.cart.items).filter(item => item[1].productQuantity > 0).length === 0,
+    cartTotalAmount: state => state.cart.cartTotalAmount, 
 };
 
 export const mutations = {

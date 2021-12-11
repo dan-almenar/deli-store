@@ -1,6 +1,10 @@
 # deli
 Web App for (fake) local deli store. This project serves me as an entrance for both Nuxt.js and Vuetify.
 
+There's still a lot of development yet to be made, and most likely the project will suffer a major refactoring/redesign in the future, specially for the cart page and components.
+
+Also todo: host the data in the cloud and fetch it instead of hardcoding everything. Yet again, this is just a Nuxt.js and Vuetify entry point more than anything else.
+
 ## Build Setup
 
 ```bash
